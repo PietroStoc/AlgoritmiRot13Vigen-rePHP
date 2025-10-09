@@ -15,7 +15,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
             </li>
             <li>
                 <a href="cifrato.php" class="nav-link <?php echo ($current_page === 'cifrato.php') ? 'active' : ''; ?>">
-                    Cifrato
+                    Cifra
                 </a>
             </li>
             <li>

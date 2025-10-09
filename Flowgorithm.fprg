@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<flowgorithm fileversion="3.0">
+    <attributes>
+        <attribute name="name" value=""/>
+        <attribute name="authors" value="10934128"/>
+        <attribute name="about" value=""/>
+        <attribute name="saved" value="2025-10-09 11:39:37 "/>
+        <attribute name="created" value="MTA5MzQxMjg7U0lTVEVNSTEzOzIwMjUtMTAtMDk7IjExOjMzOjU5ICI7MjI1MA=="/>
+        <attribute name="edited" value="MTA5MzQxMjg7U0lTVEVNSTEzOzIwMjUtMTAtMDk7IjExOjM5OjM3ICI7MTsyMzYw"/>
+    </attributes>
+    <function name="Main" type="None" variable="">
+        <parameters/>
+        <body>
+            <input variable="Frase"/>
+            <input variable="Chiave"/>
+            <for variable="numeroLettere" start="0" end="Frase" direction="inc" step="1">
+                <declare name="temp" type="String" array="False" size=""/>
+            </for>
+        </body>
+    </function>
+</flowgorithm>

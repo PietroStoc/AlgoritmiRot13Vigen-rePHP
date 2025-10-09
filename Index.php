@@ -49,7 +49,6 @@ session_start();
                             onchange="toggleKeyField()"
                         >
                         <span>ROT13</span>
-                        <small>Algoritmo di sostituzione semplice (shift di 13 posizioni)</small>
                     </label>
                     
                     <label class="radio-label">
@@ -61,7 +60,6 @@ session_start();
                             onchange="toggleKeyField()"
                         >
                         <span>Vigenère</span>
-                        <small>Cifrario polialfabetico con chiave personalizzata</small>
                     </label>
                 </div>
             </div>
