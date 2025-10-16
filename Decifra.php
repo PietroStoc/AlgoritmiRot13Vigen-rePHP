@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <p class="subtitle">Inserisci un messaggio cifrato per decifrarlo</p>
         
         <?php if ($error): ?>
-            <div class="error-message">
+            <div class="error">
                 <?php echo htmlspecialchars($error); ?>
             </div>
         <?php endif; ?>
@@ -72,7 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </div>
             
             <div class="form-group">
-                <label>Algoritmo utilizzato per cifrare:</label>
+                <label>Algoritmo utilizzato:</label>
                 <div class="radio-group">
                     <label class="radio-label">
                         <input 
@@ -82,7 +82,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php echo ($algorithm === 'rot13') ? 'checked' : ''; ?>
                             onchange="toggleKeyField()"
                         >
-                        <span>ROT13</span>
+                        <div>
+                            <strong>ROT13</strong>
+                        </div>
                     </label>
                     
                     <label class="radio-label">
@@ -93,7 +95,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <?php echo ($algorithm === 'vigenere') ? 'checked' : ''; ?>
                             onchange="toggleKeyField()"
                         >
-                        <span>Vigenère</span>
+                        <div>
+                            <strong>Vigenère</strong>
+                        </div>
                     </label>
                 </div>
             </div>
@@ -113,7 +117,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             
             <div class="form-actions">
                 <button type="submit" class="btn btn-primary">Decifra Messaggio</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="reset" class="btn btn-secondary">Cancella</button>
             </div>
         </form>
         
@@ -128,6 +132,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 </div>
                 
+                <div class="arrow">⬇️</div>
+                
                 <div class="message-section">
                     <h3>Messaggio Originale:</h3>
                     <div class="message-content original">
@@ -137,7 +143,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 
                 <?php if (isset($_SESSION['original_message']) && $_SESSION['original_message'] === $decrypted): ?>
                     <div class="success-badge">
-                        Decifratura corretta! Il messaggio corrisponde all'originale.
+                        ✓ Decifratura corretta! Il messaggio corrisponde all'originale.
                     </div>
                 <?php endif; ?>
             </div>
@@ -166,4 +172,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         toggleKeyField();
     </script>
 </body>
-</html>
+</html> 

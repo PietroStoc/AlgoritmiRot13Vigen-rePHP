@@ -1,12 +1,17 @@
 <?php
 session_start();
+
+// Pulisci messaggi di errore precedenti
+if (!isset($_POST['submit'])) {
+    unset($_SESSION['error']);
+}
 ?>
 <!DOCTYPE html>
 <html lang="it">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cifratura Messaggi - ROT13 & Vigenère</title>
+    <title>Cifratura Messaggi - Home</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,10 +19,10 @@ session_start();
     
     <div class="container">
         <h1>Cifratura Messaggi</h1>
-        <p class="subtitle">Scegli l'algoritmo e inserisci il messaggio da cifrare</p>
+        <p class="subtitle">Inserisci il messaggio da cifrare e scegli l'algoritmo</p>
         
         <?php if (isset($_SESSION['error'])): ?>
-            <div class="error-message">
+            <div class="error">
                 <?php 
                 echo htmlspecialchars($_SESSION['error']); 
                 unset($_SESSION['error']);
@@ -27,13 +32,13 @@ session_start();
         
         <form action="cifrato.php" method="POST" class="cipher-form">
             <div class="form-group">
-                <label for="message">Messaggio:</label>
+                <label for="message">Messaggio da cifrare:</label>
                 <textarea 
                     id="message" 
                     name="message" 
-                    rows="5" 
+                    rows="1" 
                     required
-                    placeholder="Inserisci il messaggio da cifrare..."
+                    placeholder="Inserisci..."
                 ><?php echo isset($_SESSION['last_message']) ? htmlspecialchars($_SESSION['last_message']) : ''; ?></textarea>
             </div>
             
@@ -48,7 +53,9 @@ session_start();
                             <?php echo (!isset($_SESSION['last_algorithm']) || $_SESSION['last_algorithm'] == 'rot13') ? 'checked' : ''; ?>
                             onchange="toggleKeyField()"
                         >
-                        <span>ROT13</span>
+                        <div>
+                            <strong>ROT13</strong>
+                        </div>
                     </label>
                     
                     <label class="radio-label">
@@ -59,7 +66,9 @@ session_start();
                             <?php echo (isset($_SESSION['last_algorithm']) && $_SESSION['last_algorithm'] == 'vigenere') ? 'checked' : ''; ?>
                             onchange="toggleKeyField()"
                         >
-                        <span>Vigenère</span>
+                        <div>
+                            <strong>Vigenère</strong>
+                        </div>
                     </label>
                 </div>
             </div>
@@ -72,18 +81,16 @@ session_start();
                     name="key" 
                     placeholder="Inserisci la chiave (solo lettere)"
                     pattern="[A-Za-z]+"
-                    title="La chiave deve contenere solo lettere"
                     value="<?php echo isset($_SESSION['last_key']) ? htmlspecialchars($_SESSION['last_key']) : ''; ?>"
                 >
-                <small>La chiave deve contenere solo lettere (verrà ripetuta per la lunghezza del messaggio)</small>
+                <small>La chiave deve contenere solo lettere</small>
             </div>
             
             <div class="form-actions">
-                <button type="submit" class="btn btn-primary">Cifra Messaggio</button>
-                <button type="reset" class="btn btn-secondary">Reset</button>
+                <button type="submit" name="submit" class="btn btn-primary">Cifra Messaggio</button>
+                <button type="reset" class="btn btn-secondary">Cancella</button>
             </div>
         </form>
-        
     </div>
     
     <script>
@@ -101,7 +108,6 @@ session_start();
             }
         }
         
-        // Inizializza al caricamento della pagina
         toggleKeyField();
     </script>
 </body>

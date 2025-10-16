@@ -8,17 +8,17 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit();
 }
 
-// Validazione input
+// Recupera i dati dal form
 $message = $_POST['message'] ?? '';
 $algorithm = $_POST['algorithm'] ?? '';
 $key = $_POST['key'] ?? '';
 
-// Salva i dati in sessione per ripopolare il form se necessario
+// Salva in sessione per eventuale ritorno
 $_SESSION['last_message'] = $message;
 $_SESSION['last_algorithm'] = $algorithm;
 $_SESSION['last_key'] = $key;
 
-// Controlli di validazione
+// Validazione input
 if (empty($message)) {
     $_SESSION['error'] = 'Il messaggio non può essere vuoto';
     header('Location: index.php');
@@ -74,10 +74,10 @@ try {
     <div class="container">
         <h1>Messaggio Cifrato</h1>
         
-        <div class="result-box success">
-            <h2>Algoritmo utilizzato: <?php echo strtoupper($algorithm); ?></h2>
+        <div class="result-box">
+            <h2>Algoritmo: <?php echo strtoupper($algorithm); ?></h2>
             <?php if ($algorithm === 'vigenere'): ?>
-                <p class="key-info">Chiave: <strong><?php echo htmlspecialchars($key); ?></strong></p>
+                <p class="key-info">Chiave utilizzata: <strong><?php echo htmlspecialchars($key); ?></strong></p>
             <?php endif; ?>
             
             <div class="message-section">
@@ -91,19 +91,12 @@ try {
                 <h3>Messaggio Cifrato:</h3>
                 <div class="message-content encrypted">
                     <?php echo nl2br(htmlspecialchars($encrypted)); ?>
-        </div>
-        
-        <div class="statistics">
-            <h3>Statistiche</h3>
-            <ul>
-                <li>Lunghezza messaggio originale: <strong><?php echo strlen($message); ?></strong> caratteri</li>
-                <li>Lunghezza messaggio cifrato: <strong><?php echo strlen($encrypted); ?></strong> caratteri</li>
-                <li>Lettere nel messaggio: <strong><?php echo preg_match_all('/[a-zA-Z]/', $message); ?></strong></li>
-            </ul>
+                </div>
+            </div>
         </div>
         
         <div class="form-actions">
-            <a href="index.php" class="btn btn-secondary">⬅Cifra Nuovo Messaggio</a>
+            <a href="index.php" class="btn btn-secondary">Torna Indietro</a>
             <a href="decifra.php" class="btn btn-primary">Vai a Decifratura</a>
         </div>
     </div>
