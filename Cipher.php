@@ -27,7 +27,6 @@ class Rot13Cipher extends Cipher {
     }
     
     public function decrypt() {
-        // ROT13 è simmetrico: cifrare e decifrare sono la stessa operazione
         return str_rot13($this->message);
     }
 }
@@ -49,17 +48,15 @@ class VigenereCipher extends Cipher {
     
     public function encrypt() {
         if (empty($this->key)) {
-            throw new Exception("Chiave non impostata per Vigenère");
+            throw new Exception("Chiave non impostata");
         }
-        
         return $this->processVigenere(true);
     }
     
     public function decrypt() {
         if (empty($this->key)) {
-            throw new Exception("Chiave non impostata per Vigenère");
+            throw new Exception("Chiave non impostata");
         }
-        
         return $this->processVigenere(false);
     }
     
@@ -71,30 +68,24 @@ class VigenereCipher extends Cipher {
         for ($i = 0; $i < strlen($this->message); $i++) {
             $char = $this->message[$i];
             
-            // Verifica se è una lettera
             if (ctype_alpha($char)) {
                 $isUpper = ctype_upper($char);
                 $char = strtoupper($char);
                 
-                // Ottieni il valore della chiave (A=0, B=1, ..., Z=25)
                 $keyChar = $this->key[$keyIndex % $keyLength];
                 $shift = ord($keyChar) - ord('A');
                 
                 if (!$encrypt) {
-                    $shift = -$shift; // Per decifrare, shifta nella direzione opposta
+                    $shift = -$shift;
                 }
                 
-                // Applica lo shift
                 $charValue = ord($char) - ord('A');
                 $newCharValue = ($charValue + $shift + 26) % 26;
                 $newChar = chr($newCharValue + ord('A'));
                 
-                // Mantieni il caso originale
                 $result .= $isUpper ? $newChar : strtolower($newChar);
-                
                 $keyIndex++;
             } else {
-                // Non è una lettera, mantieni il carattere invariato
                 $result .= $char;
             }
         }
@@ -104,7 +95,7 @@ class VigenereCipher extends Cipher {
 }
 
 /**
- * Factory per creare l'algoritmo di cifratura appropriato
+ * Factory per creare l'algoritmo di cifratura
  */
 class CipherFactory {
     public static function create($algorithm, $message, $key = '') {
